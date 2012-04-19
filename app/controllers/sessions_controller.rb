@@ -14,6 +14,10 @@ class SessionsController < ApplicationController
     redirect_to root_url, :notice => t('helpers.action.logout')
   end
 
+  def failure
+    redirect_to root_url, :notice => t('helpers.action.login_failure', msg: params[:message] || '')
+  end
+
   private
   def login_and_redirect_to(user, page)
     session[:user_id] = user.id
