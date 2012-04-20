@@ -6,6 +6,8 @@ class Problem < ActiveRecord::Base
   has_many :answers, :dependent => :destroy
   has_many :solvers, through: :answers, source: :user
 
+  validates_presence_of  :correct, :description, :title, :wrong1, :wrong2, :wrong3
+
   def random_choices
     [correct, wrong1, wrong2, wrong3].shuffle
   end
