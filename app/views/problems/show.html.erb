@@ -1,6 +1,8 @@
 <%- model_class = @problem.class -%>
 <h1><%= @problem.title %></h1>
 
+<div class="row">
+  <div class="span8">
 <p>by. <%= link_to @problem.creator, user_path(@problem.creator) %></p>
 
 <p><%= @problem.solvers.count %> 人が解き、<%= @problem.answers.where(correct: true).count %> 人が正解しました。</p>
@@ -11,26 +13,50 @@
 
 <% if current_user %>
   <% if @problem.solvers.include? current_user %>
-    <% answer = @problem.myanswer(current_user) %>
-    <div class="alert <%= answer.correct? ? 'alert-success' : 'alert-error' %>">
-      あなたの回答: <strong><%= answer.choice %></strong><br />
-      正解: <strong><%= @problem.correct %></strong>
-    </div>
-    <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://emacs-kentei.heroku.com/" data-text="Emacs 検定で『<%= @problem.title %>』を解きました" data-lang="ja" data-count="none">ツイート</a><br />
-    <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+    <%= render partial: 'show_answered' %>
   <% else %>
-    <%= form_tag(action: 'answer') do %>
-      <% @problem.random_choices.each do |c| %>
-        <label class="radio"><%= radio_button_tag 'choice', c, false, class: 'choice' %><%= c %></label>
-      <% end %>
-      <%= submit_tag "回答", class: 'btn btn-primary' %>
-    <% end %>
+    <%= render partial: 'show_to_answer' %>
   <% end %>
 <% else %>
   <div class="alert alert-warning">
     問題に回答するには、<%= link_to 'twitter アカウントでログイン', '/auth/twitter' %>する必要があります。
   </div>
 <% end %>
-
 <%= link_to t('.back', :default => t("helpers.links.back")),
               problems_path, :class => 'btn'  %>
+
+  </div>
+  <div class="span4">
+
+<script charset="utf-8" src="http://widgets.twimg.com/j/2/widget.js"></script>
+<script>
+new TWTR.Widget({
+  version: 2,
+  type: 'search',
+  search: '<%= "http://emacs-kentei.heroku.com#{request.path}" %>',
+  interval: 30000,
+  title: 'Emacs 検定をした人たち',
+  subject: 'この問題を解いた人たち',
+  width: 250,
+  height: 300,
+  theme: {
+    shell: {
+      background: '#8ec1da',
+      color: '#ffffff'
+    },
+    tweets: {
+      background: '#ffffff',
+      color: '#444444',
+      links: '#1985b5'
+    }
+  },
+  features: {
+    scrollbar: false,
+    loop: false,
+    live: true,
+    behavior: 'default'
+  }
+}).render().start();
+</script>
+  </div>
+</div>

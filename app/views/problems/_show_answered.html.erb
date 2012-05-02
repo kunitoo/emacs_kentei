@@ -1,0 +1,7 @@
+<% answer = @problem.myanswer(current_user) %>
+<div class="alert <%= answer.correct? ? 'alert-success' : 'alert-error' %>">
+  あなたの回答: <strong><%= answer.choice %></strong><br />
+  正解: <strong><%= @problem.correct %></strong>
+</div>
+<p>問題・解答に関する質問や議論は、Twitter で問題の作者さんに優しく聞いてください。<br />ツイートボタンからも作者に Mention をして投稿することができます。</p>
+<%= tweet_button url: "http://emacs-kentei.heroku.com#{request.path}", text: "『#{@problem.title}』を解きました #emacskentei", lang: "ja", via: @problem.creator.name, count: "none" %><br />
