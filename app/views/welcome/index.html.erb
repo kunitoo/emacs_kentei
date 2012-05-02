@@ -1,7 +1,9 @@
 <div class="hero-unit">
   <h1>Emacs 検定</h1>
   <p>Emacs 検定は、すべての Emacs ユーザが互いに問題を出しあい、高めあう、オープンな最高のフィールドです。</p>
-  <p><a href="/auth/twitter" class="btn btn-primary btn-large">Twitter でログイン »</a></p>
+  <p><a href="/auth/twitter" class="btn btn-primary btn-large">Twitter でログイン »</a>
+    <a href="https://github.com/tomykaira/emacs_kentei" class="btn btn-large">Fork me on Github!</a>
+    </p>
 </div>
 
 <div class="row">
@@ -16,8 +18,39 @@
     <p>Emacs は奥深い世界です。Vimmer は<%= link_to 'Vim 検定', "http://www.infiniteloop.co.jp/vim/" %>というもので知識を広めているようですが、これは問題を自由に作れるわけではありません。学んだ知識をシェアして、他の Emacs ユーザを支援しましょう。</p>
   </div>
   <div class="span4">
-    <h2>Fork me on Github!</h2>
-    <%= link_to image_tag("github.png"), "https://github.com/tomykaira/emacs_kentei" %>
-    <p>本プロジェクトのソースコードはすべて github 上でシェアされています。プロジェクトは発展途上なので、いろいろな機能追加を募集しています。こんな機能が欲しい、という提案も、Issue から御気軽にどうそ。</p>
+    <div class="row">
+  <div class="span6">
+    <script charset="utf-8" src="http://widgets.twimg.com/j/2/widget.js"></script>
+<script>
+new TWTR.Widget({
+  version: 2,
+  type: 'search',
+  search: '#emacskentei',
+  interval: 30000,
+  title: 'Emacs 検定をした人たち',
+  subject: '#emacskentei',
+  width: 250,
+  height: 300,
+  theme: {
+    shell: {
+      background: '#8ec1da',
+      color: '#ffffff'
+    },
+    tweets: {
+      background: '#ffffff',
+      color: '#444444',
+      links: '#1985b5'
+    }
+  },
+  features: {
+    scrollbar: false,
+    loop: false,
+    live: true,
+    behavior: 'default'
+  }
+}).render().start();
+</script>
+  </div>
+</div>
   </div>
 </div>
