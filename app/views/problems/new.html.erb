@@ -1,4 +1,10 @@
 <%- model_class = @problem.class -%>
 <h1><%=t '.title', :default => t('helpers.titles.new', :model => model_class.model_name.human,
                                :default => "New #{model_class.model_name.human}") %></h1>
+<ul class="unstyled">
+  <li><i class="icon-plus"></i> 環境やバージョンによる問題は、その環境を明示すると分かりやすいです。</li>
+  <li><i class="icon-plus"></i> 環境やバージョンで答えが異なる問題は、極力避けてください。</li>
+  <li><i class="icon-plus"></i> 回答者からフィードバックを受けた場合は、できるだけ対応をおねがいします。</li>
+</ul>
+
 <%= render :partial => 'form' %>
