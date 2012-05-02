@@ -28,6 +28,7 @@ gem 'will_paginate'
 gem 'bootstrap-will_paginate'
 
 gem 'omniauth-twitter'
+gem 'tweet-button'
 
 group :production do
   gem 'pg'
