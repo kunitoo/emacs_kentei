@@ -28,7 +28,7 @@ gem 'will_paginate'
 gem 'bootstrap-will_paginate'
 
 gem 'omniauth-twitter'
-gem 'tweet-button'
+gem 'tweet-button', github: 'tomykaira/tweet-button'
 
 group :production do
   gem 'pg'
