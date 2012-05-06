@@ -52,7 +52,11 @@ class ProblemsController < ApplicationController
   # POST /problems
   # POST /problems.json
   def create
-    @problem = Problem.new(params[:problem])
+    correct = params[:problem][:correct]
+    params[:problem].delete(:correct)
+    @problem = Problem.new(params[:problem]) do |prob|
+      prob.correct = correct
+    end
     @problem.creator = current_user
 
     respond_to do |format|
@@ -79,6 +83,7 @@ class ProblemsController < ApplicationController
 
     if @problem.creator == current_user
       respond_to do |format|
+        params[:problem].delete(:correct)
         if @problem.update_attributes(params[:problem])
           format.html { redirect_to @problem, notice: t('helpers.action.create_problem') }
           format.json { render json: @problem, status: :created, location: @problem }
