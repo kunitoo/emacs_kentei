@@ -136,6 +136,7 @@ ja:
       back: 一覧に戻る
     titles:
       new: %{model}の新規作成
+      edit: 『%{name}』の編集
     action:
       logout: ログアウトしました
       login: ログインしました
