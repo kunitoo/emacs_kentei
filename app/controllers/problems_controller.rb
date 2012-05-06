@@ -85,7 +85,7 @@ class ProblemsController < ApplicationController
       respond_to do |format|
         params[:problem].delete(:correct)
         if @problem.update_attributes(params[:problem])
-          format.html { redirect_to @problem, notice: t('helpers.action.create_problem') }
+          format.html { redirect_to @problem, notice: t('helpers.action.update_problem') }
           format.json { render json: @problem, status: :created, location: @problem }
         else
           format.html { render action: "new" }

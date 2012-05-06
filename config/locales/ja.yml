@@ -143,6 +143,7 @@ ja:
       login: ログインしました
       not_logged_in: ログインしてください
       create_problem: 問題を作成しました
+      update_problem: 問題を変更しました
       login_failure: ログインに失敗しました。もう一度お試しください(%{msg})。
   number:
     currency:
