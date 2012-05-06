@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 class ProblemsController < ApplicationController
 
-  before_filter :require_login, only: [:new, :create, :answer]
+  before_filter :require_login, only: [:new, :create, :answer, :edit, :update]
 
   # GET /problems
   # GET /problems.json
@@ -63,6 +63,32 @@ class ProblemsController < ApplicationController
         format.html { render action: "new" }
         format.json { render json: @problem.errors, status: :unprocessable_entity }
       end
+    end
+  end
+
+  # GET /problems/1/edit
+  def edit
+    @problem = Problem.find(params[:id])
+    render :status => :forbidden, :text => "他人の作成した問題を編集することはできません" unless @problem.creator == current_user
+  end
+
+  # PUT /problems/1
+  # PUT /problems/1.json
+  def update
+    @problem = Problem.find(params[:id])
+
+    if @problem.creator == current_user
+      respond_to do |format|
+        if @problem.update_attributes(params[:problem])
+          format.html { redirect_to @problem, notice: t('helpers.action.create_problem') }
+          format.json { render json: @problem, status: :created, location: @problem }
+        else
+          format.html { render action: "new" }
+          format.json { render json: @problem.errors, status: :unprocessable_entity }
+        end
+      end
+    else
+      render :status => :forbidden, :text => "他人の作成した問題を編集することはできません"
     end
   end
 
