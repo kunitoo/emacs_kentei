@@ -134,8 +134,10 @@ ja:
     links:
       cancel: キャンセル
       back: 一覧に戻る
+      edit: 編集
     titles:
       new: %{model}の新規作成
+      edit: 『%{name}』の編集
     action:
       logout: ログアウトしました
       login: ログインしました
