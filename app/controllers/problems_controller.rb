@@ -4,20 +4,15 @@ class ProblemsController < ApplicationController
 
   before_filter :require_login, only: [:new, :create, :answer, :edit, :update]
 
-  # GET /problems
-  # GET /problems.json
   def index
     @problems = Problem.paginate(:page => params[:page])
   end
 
-  # GET /problems/1
-  # GET /problems/1.json
   def show
     @problem = Problem.find(params[:id])
   end
 
   # POST /problems/answer/1
-  # POST /problems/answer/1.json
   def answer
     @problem = Problem.find(params[:id])
 
@@ -26,14 +21,10 @@ class ProblemsController < ApplicationController
     redirect_to @problem
   end
 
-  # GET /problems/new
-  # GET /problems/new.json
   def new
     @problem = Problem.new
   end
 
-  # POST /problems
-  # POST /problems.json
   def create
     correct = params[:problem][:correct]
     params[:problem].delete(:correct)
@@ -46,14 +37,11 @@ class ProblemsController < ApplicationController
     respond_with @problem, location: @problem, notice: t('helpers.action.create_problem')
   end
 
-  # GET /problems/1/edit
   def edit
     @problem = Problem.find(params[:id])
     render_not_owner_error unless @problem.creator == current_user
   end
 
-  # PUT /problems/1
-  # PUT /problems/1.json
   def update
     @problem = Problem.find(params[:id])
 
