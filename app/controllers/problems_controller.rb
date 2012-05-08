@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 class ProblemsController < ApplicationController
   respond_to :html
 
@@ -60,6 +59,6 @@ class ProblemsController < ApplicationController
   end
 
   def render_not_owner_error
-    render :status => :forbidden, :text => "他人の作成した問題を編集することはできません"
+    render :status => :forbidden, :text => t('helpers.action.not_editable')
   end
 end
