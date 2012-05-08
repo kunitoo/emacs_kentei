@@ -145,6 +145,7 @@ ja:
       create_problem: 問題を作成しました
       update_problem: 問題を変更しました
       login_failure: ログインに失敗しました。もう一度お試しください(%{msg})。
+      not_editable: 他人の作成した問題を編集することはできません
   number:
     currency:
       format:
