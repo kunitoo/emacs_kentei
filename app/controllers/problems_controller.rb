@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 class ProblemsController < ApplicationController
+  respond_to :html
 
   before_filter :require_login, only: [:new, :create, :answer, :edit, :update]
 
@@ -7,22 +8,12 @@ class ProblemsController < ApplicationController
   # GET /problems.json
   def index
     @problems = Problem.paginate(:page => params[:page])
-
-    respond_to do |format|
-      format.html # index.html.erb
-      format.json { render json: @problems }
-    end
   end
 
   # GET /problems/1
   # GET /problems/1.json
   def show
     @problem = Problem.find(params[:id])
-
-    respond_to do |format|
-      format.html # show.html.erb
-      format.json { render json: @problem }
-    end
   end
 
   # POST /problems/answer/1
@@ -32,21 +23,13 @@ class ProblemsController < ApplicationController
 
     @problem.answer_by(current_user, params[:choice])
 
-    respond_to do |format|
-      format.html { redirect_to @problem }
-      format.json { render json: @problem, status: :answered, location: @problem }
-    end
+    redirect_to @problem
   end
 
   # GET /problems/new
   # GET /problems/new.json
   def new
     @problem = Problem.new
-
-    respond_to do |format|
-      format.html # new.html.erb
-      format.json { render json: @problem }
-    end
   end
 
   # POST /problems
@@ -59,21 +42,14 @@ class ProblemsController < ApplicationController
     end
     @problem.creator = current_user
 
-    respond_to do |format|
-      if @problem.save
-        format.html { redirect_to @problem, notice: t('helpers.action.create_problem') }
-        format.json { render json: @problem, status: :created, location: @problem }
-      else
-        format.html { render action: "new" }
-        format.json { render json: @problem.errors, status: :unprocessable_entity }
-      end
-    end
+    @problem.save
+    respond_with @problem, location: @problem, notice: t('helpers.action.create_problem')
   end
 
   # GET /problems/1/edit
   def edit
     @problem = Problem.find(params[:id])
-    render :status => :forbidden, :text => "他人の作成した問題を編集することはできません" unless @problem.creator == current_user
+    render_not_owner_error unless @problem.creator == current_user
   end
 
   # PUT /problems/1
@@ -82,23 +58,20 @@ class ProblemsController < ApplicationController
     @problem = Problem.find(params[:id])
 
     if @problem.creator == current_user
-      respond_to do |format|
-        params[:problem].delete(:correct)
-        if @problem.update_attributes(params[:problem])
-          format.html { redirect_to @problem, notice: t('helpers.action.update_problem') }
-          format.json { render json: @problem, status: :created, location: @problem }
-        else
-          format.html { render action: "new" }
-          format.json { render json: @problem.errors, status: :unprocessable_entity }
-        end
-      end
+      params[:problem].delete(:correct)
+      @problem.update_attributes(params[:problem])
+      respond_with @problem, location: problem_path(@problem), notice: t('helpers.action.update_problem')
     else
-      render :status => :forbidden, :text => "他人の作成した問題を編集することはできません"
+      render_not_owner_error
     end
   end
 
   private
   def require_login
     redirect_to '/', notice: t('helpers.action.not_logged_in') unless current_user
+  end
+
+  def render_not_owner_error
+    render :status => :forbidden, :text => "他人の作成した問題を編集することはできません"
   end
 end
